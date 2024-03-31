@@ -7,13 +7,26 @@ import { UpdateRoleDto } from '../dto/update-role.dto';
 export class RolesService {
   constructor(@Inject('IAM_SERVICE') private readonly iamClient: ClientProxy) {}
 
-  async create(createRoleDto: CreateRoleDto) {}
+  async create(createRoleDto: CreateRoleDto) {
+    return this.iamClient.send({ cmd: 'create_role' }, createRoleDto);
+  }
 
-  async findAll() {}
+  async findAll() {
+    return this.iamClient.send({ cmd: 'get_roles' }, {});
+  }
 
-  async findOne(id: string) {}
+  async findOne(id: string) {
+    return this.iamClient.send({ cmd: 'get_role' }, id);
+  }
 
-  async update(id: string, updateRoleDto: UpdateRoleDto) {}
+  async update(id: string, updateRoleDto: UpdateRoleDto) {
+    return this.iamClient.send(
+      { cmd: 'update_role' },
+      { id, ...updateRoleDto },
+    );
+  }
 
-  async remove(id: string) {}
+  async remove(id: string) {
+    return this.iamClient.send({ cmd: 'delete_role' }, id);
+  }
 }

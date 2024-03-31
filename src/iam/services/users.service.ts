@@ -8,26 +8,25 @@ export class UsersService {
   constructor(@Inject('IAM_SERVICE') private readonly iamClient: ClientProxy) {}
 
   async create(createUserDto: CreateUserDto) {
-    this.iamClient.emit('create_user', createUserDto);
+    return this.iamClient.send({ cmd: 'create_user' }, createUserDto);
   }
 
   async findAll() {
-    try {
-      return this.iamClient.send({ cmd: 'get_users' }, {});
-    } catch (error) {
-      console.log(error);
-    }
+    return this.iamClient.send({ cmd: 'get_users' }, {});
   }
 
   async findOne(id: string) {
-    return this.iamClient.send({ cmd: 'get_user' }, { id });
+    return this.iamClient.send({ cmd: 'get_user' }, id);
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    this.iamClient.emit('update_user', { id, ...updateUserDto });
+    return this.iamClient.send(
+      { cmd: 'update_user' },
+      { id, ...updateUserDto },
+    );
   }
 
   async remove(id: string) {
-    this.iamClient.emit('delete_user', { id });
+    return this.iamClient.send({ cmd: 'delete_user' }, id);
   }
 }

@@ -7,6 +7,8 @@ import { RolesService } from './services/roles.service';
 import { PermissionsService } from './services/permissions.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfigService } from '@nestjs/config';
+import { PermissionToRoleController } from './controllers/permission-to-role.controller';
+import { PermissionToRoleService } from './services/permission-to-role.service';
 
 @Module({
   imports: [
@@ -24,7 +26,17 @@ import { ConfigService } from '@nestjs/config';
       },
     ]),
   ],
-  controllers: [UsersController, RolesController, PermissionsController],
-  providers: [UsersService, RolesService, PermissionsService],
+  controllers: [
+    UsersController,
+    RolesController,
+    PermissionsController,
+    PermissionToRoleController,
+  ],
+  providers: [
+    UsersService,
+    RolesService,
+    PermissionsService,
+    PermissionToRoleService,
+  ],
 })
 export class IamModule {}
